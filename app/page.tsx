@@ -9,8 +9,6 @@ export default function Home() {
             <div className="flex-col">
                 <a className="w-full flex justify-center text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg mt-3 mb-2 px-5 py-2.5 hover:shadow-lg"
                    href="/sign-in/google">Sign in with Google!</a>
-                <a className="w-full flex justify-center text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg mt-3 mb-2 px-5 py-2.5 hover:shadow-lg"
-                   href="/sign-in/github">Sign in with Github!</a>
             </div>
         </div>
       </div>
