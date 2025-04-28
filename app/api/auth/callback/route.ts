@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
-    console.log('OAuth Callback hit!');
-
     const code = req.nextUrl.searchParams.get('code');
-    console.log('Received code:', code);
     if (!code) {
-        console.error('No code found.');
-        return NextResponse.redirect(new URL('/', req.url));
+        console.error('No code found in callback.');
+        return NextResponse.redirect(new URL('/', req.nextUrl.origin));
     }
 
     const params = new URLSearchParams();
@@ -24,11 +21,11 @@ export async function GET(req: NextRequest) {
     });
 
     const tokenData = await tokenRes.json();
-    console.log('Token data response:', tokenData);
+    console.log('Token data:', tokenData);
 
     if (!tokenData.access_token) {
         console.error('Failed to retrieve access token:', tokenData);
-        return NextResponse.redirect(new URL('/', req.url));
+        return NextResponse.redirect(new URL('/', req.nextUrl.origin));
     }
 
     const accessToken = tokenData.access_token;
@@ -42,16 +39,14 @@ export async function GET(req: NextRequest) {
     const user = await userRes.json();
     console.log('User info response:', user);
 
-    if (!user || user.error) {
+    if (!user || !user.email) {
         console.error('Failed to retrieve user info:', user);
-        return NextResponse.redirect(new URL('/', req.url));
+        return NextResponse.redirect(new URL('/', req.nextUrl.origin));
     }
 
     const encodedUser = encodeURIComponent(JSON.stringify(user));
-    const redirectUrl = new URL('/profile', req.nextUrl.origin);
-    redirectUrl.searchParams.set('user', encodedUser);
+    const profileUrl = new URL(`/profile?user=${encodedUser}`, req.nextUrl.origin);
+    console.log('Redirecting to:', profileUrl.toString());
 
-    console.log('Redirecting to:', redirectUrl.toString());
-
-    return NextResponse.redirect(redirectUrl);
+    return NextResponse.redirect(profileUrl);
 }
