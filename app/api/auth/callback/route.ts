@@ -3,8 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(req: NextRequest) {
     const code = req.nextUrl.searchParams.get('code');
     if (!code) {
-        console.error('No code found in callback.');
-        return NextResponse.redirect(new URL('/', req.nextUrl.origin));
+        return NextResponse.redirect(new URL('/', req.url));
     }
 
     const params = new URLSearchParams();
@@ -21,11 +20,11 @@ export async function GET(req: NextRequest) {
     });
 
     const tokenData = await tokenRes.json();
-    console.log('Token data:', tokenData);
+    console.log('Token data response:', tokenData);
 
     if (!tokenData.access_token) {
         console.error('Failed to retrieve access token:', tokenData);
-        return NextResponse.redirect(new URL('/', req.nextUrl.origin));
+        return NextResponse.redirect(new URL('/', req.url));
     }
 
     const accessToken = tokenData.access_token;
@@ -39,14 +38,16 @@ export async function GET(req: NextRequest) {
     const user = await userRes.json();
     console.log('User info response:', user);
 
-    if (!user || !user.email) {
+    if (!user || user.error) {
         console.error('Failed to retrieve user info:', user);
-        return NextResponse.redirect(new URL('/', req.nextUrl.origin));
+        return NextResponse.redirect(new URL('/', req.url));
     }
 
     const encodedUser = encodeURIComponent(JSON.stringify(user));
-    const profileUrl = new URL(`/profile?user=${encodedUser}`, req.nextUrl.origin);
-    console.log('Redirecting to:', profileUrl.toString());
+    const redirectUrl = new URL('/profile', req.nextUrl.origin);
+    redirectUrl.searchParams.set('user', encodedUser);
 
-    return NextResponse.redirect(profileUrl);
+    console.log('Redirecting to:', redirectUrl.toString());
+
+    return NextResponse.redirect(redirectUrl);
 }
