@@ -1,14 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
+    console.log('OAuth Callback hit!');
+
     const code = req.nextUrl.searchParams.get('code');
-    if (!code) return NextResponse.redirect('/');
+    console.log('Received code:', code);
+    if (!code) {
+        console.error('No code found.');
+        return NextResponse.redirect(new URL('/', req.url));
+    }
 
     const params = new URLSearchParams();
     params.append('code', code);
-    params.append('client_id', process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!);
-    params.append('client_secret', process.env.GOOGLE_CLIENT_SECRET!);
-    params.append('redirect_uri', process.env.NEXT_PUBLIC_OAUTH_REDIRECT_URI!);
+    params.append('client_id', process.env.CLIENT_ID!);
+    params.append('client_secret', process.env.CLIENT_SECRET!);
+    params.append('redirect_uri', process.env.OAUTH_REDIRECT!);
     params.append('grant_type', 'authorization_code');
 
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
@@ -18,6 +24,13 @@ export async function GET(req: NextRequest) {
     });
 
     const tokenData = await tokenRes.json();
+    console.log('Token data response:', tokenData);
+
+    if (!tokenData.access_token) {
+        console.error('Failed to retrieve access token:', tokenData);
+        return NextResponse.redirect(new URL('/', req.url));
+    }
+
     const accessToken = tokenData.access_token;
 
     const userRes = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
@@ -27,7 +40,18 @@ export async function GET(req: NextRequest) {
     });
 
     const user = await userRes.json();
-    const encodedUser = encodeURIComponent(JSON.stringify(user));
+    console.log('User info response:', user);
 
-    return NextResponse.redirect(`/profile?user=${encodedUser}`);
+    if (!user || user.error) {
+        console.error('Failed to retrieve user info:', user);
+        return NextResponse.redirect(new URL('/', req.url));
+    }
+
+    const encodedUser = encodeURIComponent(JSON.stringify(user));
+    const redirectUrl = new URL('/profile', req.nextUrl.origin);
+    redirectUrl.searchParams.set('user', encodedUser);
+
+    console.log('Redirecting to:', redirectUrl.toString());
+
+    return NextResponse.redirect(redirectUrl);
 }
