@@ -20,10 +20,8 @@ export async function GET(req: NextRequest) {
     });
 
     const tokenData = await tokenRes.json();
-    console.log('Token data response:', tokenData);
 
     if (!tokenData.access_token) {
-        console.error('Failed to retrieve access token:', tokenData);
         return NextResponse.redirect(new URL('/', req.url));
     }
 
@@ -36,18 +34,13 @@ export async function GET(req: NextRequest) {
     });
 
     const user = await userRes.json();
-    console.log('User info response:', user);
 
-    if (!user || user.error) {
-        console.error('Failed to retrieve user info:', user);
+    if (!user) {
         return NextResponse.redirect(new URL('/', req.url));
     }
 
     const encodedUser = encodeURIComponent(JSON.stringify(user));
     const redirectUrl = new URL('/profile', req.nextUrl.origin);
     redirectUrl.searchParams.set('user', encodedUser);
-
-    console.log('Redirecting to:', redirectUrl.toString());
-
     return NextResponse.redirect(redirectUrl);
 }

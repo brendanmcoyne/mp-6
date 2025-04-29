@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function ProfilePage() {
-    const [user, setUser] = useState<Partial<GoogleUser> | null>(null);
+    const [user, setUser] = useState<Partial<GoogleUser> | null>(null);;
 
     useEffect(() => {
 
@@ -17,7 +17,6 @@ export default function ProfilePage() {
             try {
                 const decoded = decodeURIComponent(userParam);
                 const userObj = JSON.parse(decoded);
-                localStorage.setItem('google-user', JSON.stringify(userObj));
                 setUser(userObj);
             } catch (err) {
                 console.error('Failed to parse userParam:', err);
@@ -29,7 +28,6 @@ export default function ProfilePage() {
             }
         }
     }, []);
-    console.log(user);
 
     if (!user) {
         return <div className="p-8 text-xl">Loading...</div>;
@@ -43,7 +41,6 @@ export default function ProfilePage() {
                 <p className="text-lg">Email: {user.email}</p>
                 <p className="text-lg">Email Verified: {user.verified_email ? 'Yes' : 'No'}</p>
                 <p>Signed in with: Google</p>
-                <p>{user.id}</p>
             </div>
 
             <div className="mt-6">
