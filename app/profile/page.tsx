@@ -9,7 +9,6 @@ export default function ProfilePage() {
     const [user, setUser] = useState<Partial<GoogleUser> | null>(null);;
 
     useEffect(() => {
-
         const urlParams = new URLSearchParams(window.location.search);
         const userParam = urlParams.get('user');
 
@@ -20,11 +19,6 @@ export default function ProfilePage() {
                 setUser(userObj);
             } catch (err) {
                 console.error('Failed to parse userParam:', err);
-            }
-        } else {
-            const stored = localStorage.getItem('google-user');
-            if (stored) {
-                setUser(JSON.parse(stored));
             }
         }
     }, []);
