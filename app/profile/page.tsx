@@ -36,9 +36,10 @@ export default function ProfilePage() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-green-200 text-center">
+            <Image src="/czech.jpg" alt="Profile" width={60} height={60} className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"/>
             <div className="w-120 bg-white p-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center">
                 <h1 className="text-3xl font-bold mb-4">Welcome, {user.name}!</h1>
-                <Image src="/czech.jpg" alt="Profile" width={60} height={60} className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"/>
+                <Image src={user.picture || "/default-avatar.png"} alt="Profile" width={60} height={60} className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"/>
                 <p className="text-lg">Email: {user.email}</p>
                 <p>Signed in with: Google</p>
             </div>
