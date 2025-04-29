@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { GoogleUser } from '@/lib/types';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ProfilePage() {
     const [user, setUser] = useState<Partial<GoogleUser> | null>(null);
@@ -14,9 +15,8 @@ export default function ProfilePage() {
 
         if (userParam) {
             try {
-                const decodedOnce = decodeURIComponent(userParam);
-                const decodedTwice = decodeURIComponent(decodedOnce);
-                const userObj = JSON.parse(decodedTwice);
+                const decoded = decodeURIComponent(userParam);
+                const userObj = JSON.parse(decoded);
                 localStorage.setItem('google-user', JSON.stringify(userObj));
                 setUser(userObj);
             } catch (err) {
@@ -41,6 +41,14 @@ export default function ProfilePage() {
                 <Image src="/czech.jpg" alt="Profile" width={60} height={60} className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"/>
                 <p className="text-lg">Email: {user.email}</p>
                 <p>Signed in with: Google</p>
+            </div>
+
+            <div className="mt-6">
+                <Link href="/">
+                    <div className="inline-block px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-700 shadow-lg transition">
+                        Back to Home
+                    </div>
+                </Link>
             </div>
         </div>
     );
