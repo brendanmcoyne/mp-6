@@ -5,12 +5,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 type User = {
+    // Shared
+    provider?: 'google' | 'github';
+
+    // Google-specific
     name?: string;
     email?: string;
     verified_email?: boolean;
-    login?: string; // GitHub username
-    avatar_url?: string; // GitHub avatar
-    provider?: 'google' | 'github';
+    picture?: string;
+
+    // GitHub-specific
+    login?: string;
+    avatar_url?: string;
+    html_url?: string;
+    bio?: string;
+    location?: string;
+    public_repos?: number;
+    followers?: number;
+    following?: number;
+    created_at?: string;
 };
 
 export default function ProfilePage() {
@@ -53,16 +66,14 @@ export default function ProfilePage() {
                     className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
                 />
             )}
-            {isGithub && user.avatar_url ? (
+            {isGithub && (
                 <Image
-                    src={user.avatar_url}
-                    alt="GitHub Avatar"
+                    src="/czech.jpg"
+                    alt="Profile"
                     width={96}
                     height={96}
                     className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
                 />
-            ) : (
-                <div className="text-gray-600">GitHub avatar not found</div>
             )}
 
             <div className="w-120 bg-white p-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center">
@@ -76,7 +87,23 @@ export default function ProfilePage() {
                     </>
                 )}
                 {isGithub && (
-                    <p className="text-lg">GitHub Username: {user.login}</p>
+                    <>
+                        <p className="text-lg">GitHub Username: {user.login}</p>
+                        {user.name && <p className="text-lg">Name: {user.name}</p>}
+                        {user.bio && <p className="text-lg">Bio: {user.bio}</p>}
+                        {user.location && <p className="text-lg">Location: {user.location}</p>}
+                        {user.html_url && (
+                            <p className="text-lg">
+                                GitHub Profile:{' '}
+                                <a href={user.html_url} className="text-blue-600 underline" target="_blank">
+                                    {user.html_url}
+                                </a>
+                            </p>
+                        )}
+                        <p className="text-lg">Public Repos: {user.public_repos}</p>
+                        <p className="text-lg">Followers: {user.followers}</p>
+                        <p className="text-lg">Following: {user.following}</p>
+                    </>
                 )}
                 <p>Signed in with: {isGoogle ? 'Google' : isGithub ? 'GitHub' : 'Unknown'}</p>
             </div>
