@@ -1,7 +1,4 @@
 export async function GET() {
-    console.log('REDDIT_CLIENT_ID:', process.env.REDDIT_CLIENT_ID);
-    console.log('REDDIT_REDIRECT_URI:', process.env.REDDIT_REDIRECT_URI);
-
     const clientId = process.env.REDDIT_CLIENT_ID;
     const redirectUri = process.env.REDDIT_REDIRECT_URI;
 

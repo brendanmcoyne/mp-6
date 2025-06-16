@@ -36,6 +36,7 @@ export async function GET(req: NextRequest) {
     };
 
     const redirectUrl = new URL('/profile', req.nextUrl.origin);
+    redirectUrl.searchParams.set('provider', 'reddit');
     redirectUrl.searchParams.set('user', encodeURIComponent(JSON.stringify(userWithProvider)));
     return NextResponse.redirect(redirectUrl);
 }
