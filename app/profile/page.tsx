@@ -126,7 +126,6 @@ export default function ProfilePage() {
                     <>
                         <p className="text-lg">username: {user.username}</p>
                         <p className="text-lg">Email: {user.email}</p>
-                        <p className="text-lg">#{user.discriminator}</p>
                     </>
                 )}
                 <p>Signed in with: {isGoogle ? 'Google' : isGithub ? 'GitHub' : isReddit ? 'Reddit' : isSpotify ? 'Spotify' : isDiscord ? 'Discord' : 'Unknown'}</p>
