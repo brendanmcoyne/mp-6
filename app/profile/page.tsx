@@ -122,7 +122,7 @@ export default function ProfilePage() {
                         <p className="text-lg">Email: {user.email}</p>
                     </>
                 )}
-                {isSpotify && (
+                {isDiscord && (
                     <>
                         <p className="text-lg">username: {user.username}</p>
                         <p className="text-lg">Email: {user.email}</p>
