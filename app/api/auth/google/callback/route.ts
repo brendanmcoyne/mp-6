@@ -8,9 +8,9 @@ export async function GET(req: NextRequest) {
 
     const params = new URLSearchParams();
     params.append('code', code);
-    params.append('client_id', process.env.CLIENT_ID!);
-    params.append('client_secret', process.env.CLIENT_SECRET!);
-    params.append('redirect_uri', process.env.OAUTH_REDIRECT!);
+    params.append('client_id', process.env.GOOGLE_CLIENT_ID!);
+    params.append('client_secret', process.env.GOOGLE_CLIENT_SECRET!);
+    params.append('redirect_uri', process.env.GOOGLE_REDIRECT_URI!);
     params.append('grant_type', 'authorization_code');
 
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
