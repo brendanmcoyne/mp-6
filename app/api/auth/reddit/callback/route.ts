@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
+    console.log('REDDIT_CLIENT_ID:', process.env.REDDIT_CLIENT_ID);
+    console.log('REDDIT_REDIRECT_URI:', process.env.REDDIT_REDIRECT_URI);
     const code = req.nextUrl.searchParams.get('code');
     if (!code) return NextResponse.redirect(new URL('/', req.url));
 
