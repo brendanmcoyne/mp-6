@@ -30,6 +30,13 @@ export default function Home() {
                     >
                         Sign in with Reddit
                     </a>
+                    <a
+                        href="sign-in/spotify"
+                        className="w-full text-center bg-gray-800 hover:bg-gray-900 font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
+                        style={{ color: '#1ED760' }}
+                    >
+                        Sign in with Spotify
+                    </a>
                 </div>
             </div>
         </div>

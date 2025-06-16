@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
     const redirectUri = process.env.GOOGLE_REDIRECT_URI;
-    console.log('GOOGLE_REDIRECT_URI:', redirectUri);
-
     const clientId = process.env.GOOGLE_CLIENT_ID!;
     const scope = 'openid email profile';
     if (!redirectUri) {

@@ -1,6 +1,6 @@
 export type User = {
     // Shared
-    provider?: 'google' | 'github' | 'reddit';
+    provider?: 'google' | 'github' | 'reddit' | 'spotify';
 
     // Google-specific
     name?: string;
@@ -20,5 +20,6 @@ export type User = {
     created_at?: string;
     id?: string;
     reddit_name?: string;
+    display_name?: string;
 };
 
