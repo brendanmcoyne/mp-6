@@ -78,7 +78,7 @@ export default function ProfilePage() {
 
             <div className="w-120 bg-white p-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center">
                 <h1 className="text-3xl font-bold mb-4">
-                    Welcome, {isGoogle ? user.name : isGithub ? user.login : isReddit ? user.name : 'User'}!
+                    Welcome, {isGoogle ? user.name : isGithub ? user.login : isReddit ? user.name : isSpotify ? user.display_name : 'User'}!
                 </h1>
                 {isGoogle && (
                     <>

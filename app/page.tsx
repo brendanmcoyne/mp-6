@@ -12,28 +12,31 @@ export default function Home() {
                 <div className="flex flex-col w-full">
                     <a
                         href="sign-in/google"
-                        className="w-full text-center text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
+                        className="w-full text-center text-white font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
+                        style={{ backgroundColor: '#4285F4', color: '#DB4437'}}
                     >
                         Sign in with Google
                     </a>
 
                     <a
                         href="sign-in/github"
-                        className="w-full text-center text-white bg-gray-800 hover:bg-gray-900 font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
+                        className="w-full text-center text-white font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
+                        style={{ backgroundColor: '#24292E', color: '#FAFBFC'}}
                     >
                         Sign in with GitHub
                     </a>
 
                     <a
                         href="sign-in/reddit"
-                        className="w-full text-center text-white bg-orange-500 hover:bg-orange-600 font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
+                        className="w-full text-center text-white font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
+                        style={{ backgroundColor: '#FF4500', color: '#C6C6C6'}}
                     >
                         Sign in with Reddit
                     </a>
                     <a
                         href="sign-in/spotify"
-                        className="w-full text-center bg-gray-800 hover:bg-gray-900 font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
-                        style={{ color: '#1ED760' }}
+                        className="w-full text-center font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
+                        style={{ backgroundColor: '#212121', color: '#1ED760' }}
                     >
                         Sign in with Spotify
                     </a>
