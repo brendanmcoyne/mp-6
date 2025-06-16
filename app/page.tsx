@@ -1,20 +1,34 @@
+'use client';
+
 export default function Home() {
-  return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-green-200">
-        <div className="w-120 bg-white p-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center">
-          <header>
-            <h1 className="font-bold text-2xl mt-4">Open Authorization</h1>
-            <p className="text-neutral-500 mt-1 mb-6">Pick what sign in option to use</p>
-          </header>
-            <div className="flex-col">
-                <a className="w-full flex justify-center text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg mt-3 mb-2 px-5 py-2.5 hover:shadow-lg"
-                   href="/sign-in/google">Sign in with Google!</a>
-            </div>
-            <div className="flex-col">
-                <a className="w-full flex justify-center text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg mt-3 mb-2 px-5 py-2.5 hover:shadow-lg"
-                   href="/sign-in/github">Sign in with Github!</a>
+    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_OAUTH_REDIRECT_GOOGLE}&response_type=code&scope=openid%20email%20profile`;
+
+    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_OAUTH_REDIRECT_GITHUB}&scope=user`;
+
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-green-200">
+            <div className="w-120 bg-white p-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center">
+                <header>
+                    <h1 className="font-bold text-2xl mt-4">Open Authorization</h1>
+                    <p className="text-neutral-500 mt-1 mb-6">Pick what sign in option to use</p>
+                </header>
+
+                <div className="flex flex-col w-full">
+                    <a
+                        href={googleAuthUrl}
+                        className="w-full text-center text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
+                    >
+                        Sign in with Google
+                    </a>
+
+                    <a
+                        href={githubAuthUrl}
+                        className="w-full text-center text-white bg-gray-800 hover:bg-gray-900 font-medium rounded-lg px-5 py-2.5 hover:shadow-lg"
+                    >
+                        Sign in with GitHub
+                    </a>
+                </div>
             </div>
         </div>
-      </div>
-  );
+    );
 }
