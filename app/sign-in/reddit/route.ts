@@ -1,11 +1,24 @@
-import { NextResponse } from 'next/server';
-
 export async function GET() {
-    const clientId = process.env.REDDIT_CLIENT_ID!;
-    const redirectUri = process.env.REDDIT_REDIRECT_URI!;
+    console.log('REDDIT_CLIENT_ID:', process.env.REDDIT_CLIENT_ID);
+    console.log('REDDIT_REDIRECT_URI:', process.env.REDDIT_REDIRECT_URI);
+
+    const clientId = process.env.REDDIT_CLIENT_ID;
+    const redirectUri = process.env.REDDIT_REDIRECT_URI;
+
+    if (!clientId || !redirectUri) {
+        return new Response('Missing environment variables', { status: 500 });
+    }
+
+    const state = 'randomstring';
     const scope = 'identity';
+    const duration = 'temporary';
 
-    const authUrl = `https://www.reddit.com/api/v1/authorize?client_id=${clientId}&response_type=code&state=randomstring&redirect_uri=${redirectUri}&duration=temporary&scope=${scope}`;
+    const authUrl = `https://www.reddit.com/api/v1/authorize?client_id=${clientId}&response_type=code&state=${state}&redirect_uri=${encodeURIComponent(redirectUri)}&duration=${duration}&scope=${scope}`;
 
-    return NextResponse.redirect(authUrl);
+    return new Response(null, {
+        status: 302,
+        headers: {
+            Location: authUrl,
+        },
+    });
 }
