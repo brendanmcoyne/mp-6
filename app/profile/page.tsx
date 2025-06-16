@@ -33,6 +33,7 @@ export default function ProfilePage() {
 
     const isGoogle = user.provider === 'google';
     const isGithub = user.provider === 'github';
+    const isReddit = user.provider === 'reddit';
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-green-200 text-center">
@@ -46,6 +47,15 @@ export default function ProfilePage() {
                 />
             )}
             {isGithub && (
+                <Image
+                    src="/czech.jpg"
+                    alt="Profile"
+                    width={96}
+                    height={96}
+                    className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
+                />
+            )}
+            {isReddit && (
                 <Image
                     src="/czech.jpg"
                     alt="Profile"
@@ -80,6 +90,12 @@ export default function ProfilePage() {
                             </p>
                         )}
                         <p className="text-lg">Public Repos: {user.public_repos}</p>
+                    </>
+                )}
+                {isReddit && (
+                    <>
+                        <h1 className="text-3xl font-bold mb-4">Welcome, {user.name || user.reddit_name || 'Redditor'}!</h1>
+                        <p className="text-lg">Reddit ID: {user.id}</p>
                     </>
                 )}
                 <p>Signed in with: {isGoogle ? 'Google' : isGithub ? 'GitHub' : 'Unknown'}</p>

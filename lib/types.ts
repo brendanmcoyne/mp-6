@@ -1,6 +1,6 @@
 export type User = {
     // Shared
-    provider?: 'google' | 'github';
+    provider?: 'google' | 'github' | 'reddit';
 
     // Google-specific
     name?: string;
@@ -18,5 +18,7 @@ export type User = {
     followers?: number;
     following?: number;
     created_at?: string;
+    id?: string;
+    reddit_name?: string;
 };
 
