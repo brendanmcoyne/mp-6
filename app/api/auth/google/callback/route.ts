@@ -41,6 +41,6 @@ export async function GET(req: NextRequest) {
 
     const encodedUser = encodeURIComponent(JSON.stringify(user));
     const redirectUrl = new URL('/profile', req.nextUrl.origin);
-    redirectUrl.searchParams.set('user', encodedUser);
+    redirectUrl.searchParams.set('provider', 'google');
     return NextResponse.redirect(redirectUrl);
 }
