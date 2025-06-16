@@ -3,28 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
-type User = {
-    // Shared
-    provider?: 'google' | 'github';
-
-    // Google-specific
-    name?: string;
-    email?: string;
-    verified_email?: boolean;
-    picture?: string;
-
-    // GitHub-specific
-    login?: string;
-    avatar_url?: string;
-    html_url?: string;
-    bio?: string;
-    location?: string;
-    public_repos?: number;
-    followers?: number;
-    following?: number;
-    created_at?: string;
-};
+import { User } from '@/lib/types';
 
 export default function ProfilePage() {
     const [user, setUser] = useState<User | null>(null);
@@ -101,8 +80,6 @@ export default function ProfilePage() {
                             </p>
                         )}
                         <p className="text-lg">Public Repos: {user.public_repos}</p>
-                        <p className="text-lg">Followers: {user.followers}</p>
-                        <p className="text-lg">Following: {user.following}</p>
                     </>
                 )}
                 <p>Signed in with: {isGoogle ? 'Google' : isGithub ? 'GitHub' : 'Unknown'}</p>
