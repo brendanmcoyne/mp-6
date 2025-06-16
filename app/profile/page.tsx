@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function ProfilePage() {
-    const [user, setUser] = useState<Partial<GoogleUser> | null>(null);;
+    const [user, setUser] = useState<Partial<GoogleUser> | null>(null);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
