@@ -8,7 +8,7 @@ export default function TermsPage() {
                 <p>By using this application, you agree to the following terms:</p>
                 <ul className="list-disc list-inside mt-2">
                     <li>You agree to use this app responsibly and in compliance with all applicable laws.</li>
-                    <li>We provide this app "as is" without warranties of any kind.</li>
+                    <li>We provide this app as is, without warranties of any kind.</li>
                     <li>We are not responsible for any data loss or damages resulting from your use of the app.</li>
                     <li>We reserve the right to update these terms at any time.</li>
                 </ul>
