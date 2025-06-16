@@ -2,36 +2,42 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
     const code = req.nextUrl.searchParams.get('code');
-    if (!code) return NextResponse.redirect(new URL('/', req.url));
+    if (!code) {
+        return NextResponse.redirect(new URL('/', req.url));
+    }
 
     const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
             Accept: 'application/json',
+            'Content-Type': 'application/json',
         },
-        body: new URLSearchParams({
+        body: JSON.stringify({
             client_id: process.env.GITHUB_CLIENT_ID!,
             client_secret: process.env.GITHUB_CLIENT_SECRET!,
-            redirect_uri: process.env.GITHUB_REDIRECT_URI!,
             code,
+            redirect_uri: process.env.GITHUB_REDIRECT_URI!,
         }),
     });
 
     const tokenData = await tokenRes.json();
-    const accessToken = tokenData.access_token;
 
-    if (!accessToken) return NextResponse.redirect(new URL('/', req.url));
+    if (!tokenData.access_token) {
+        return NextResponse.redirect(new URL('/', req.url));
+    }
 
     const userRes = await fetch('https://api.github.com/user', {
         headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${tokenData.access_token}`,
+            Accept: 'application/json',
         },
     });
 
     const user = await userRes.json();
-    const encodedUser = encodeURIComponent(JSON.stringify({ ...user, provider: 'github' }));
+
+    const encodedUser = encodeURIComponent(JSON.stringify(user));
     const redirectUrl = new URL('/profile', req.nextUrl.origin);
     redirectUrl.searchParams.set('user', encodedUser);
+    redirectUrl.searchParams.set('provider', 'github'); // add this!
     return NextResponse.redirect(redirectUrl);
 }

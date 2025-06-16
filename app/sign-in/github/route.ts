@@ -5,7 +5,7 @@ export async function GET() {
     const redirectUri = process.env.GITHUB_REDIRECT_URI!;
     const scope = 'read:user user:email';
 
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
 
-    return NextResponse.redirect(authUrl);
+    return NextResponse.redirect(githubAuthUrl);
 }
