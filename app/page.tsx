@@ -13,7 +13,7 @@ export default function Home() {
                     <a
                         href="sign-in/google"
                         className="w-full text-center text-white font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
-                        style={{ backgroundColor: '#4285F4', color: '#DB4437'}}
+                        style={{ backgroundColor: '#FFFDDD', color: '#4285F4'}}
                     >
                         Sign in with Google
                     </a>
@@ -29,7 +29,7 @@ export default function Home() {
                     <a
                         href="sign-in/reddit"
                         className="w-full text-center text-white font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
-                        style={{ backgroundColor: '#FF4500', color: '#C6C6C6'}}
+                        style={{ backgroundColor: '#FF4500', color: '#FFFDDD'}}
                     >
                         Sign in with Reddit
                     </a>
@@ -39,6 +39,13 @@ export default function Home() {
                         style={{ backgroundColor: '#212121', color: '#1ED760' }}
                     >
                         Sign in with Spotify
+                    </a>
+                    <a
+                        href="sign-in/discord"
+                        className="w-full text-center font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
+                        style={{ backgroundColor: '#7289DA', color: '#23272A' }}
+                    >
+                        Sign in with Discord
                     </a>
                 </div>
             </div>

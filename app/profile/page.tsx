@@ -35,6 +35,7 @@ export default function ProfilePage() {
     const isGithub = user.provider === 'github';
     const isReddit = user.provider === 'reddit';
     const isSpotify = user.provider === 'spotify';
+    const isDiscord = user.provider === 'discord';
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-green-200 text-center">
@@ -65,7 +66,6 @@ export default function ProfilePage() {
                     className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
                 />
             )}
-
             {isSpotify && (
                 <Image
                     src="/czech.jpg"
@@ -75,7 +75,15 @@ export default function ProfilePage() {
                     className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
                 />
             )}
-
+            {isDiscord && (
+                <Image
+                    src="/czech.jpg"
+                    alt="Profile"
+                    width={96}
+                    height={96}
+                    className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
+                />
+            )}
             <div className="w-120 bg-white p-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center">
                 <h1 className="text-3xl font-bold mb-4">
                     Welcome, {isGoogle ? user.name : isGithub ? user.login : isReddit ? user.name : isSpotify ? user.display_name : 'User'}!
@@ -114,7 +122,14 @@ export default function ProfilePage() {
                         <p className="text-lg">Email: {user.email}</p>
                     </>
                 )}
-                <p>Signed in with: {isGoogle ? 'Google' : isGithub ? 'GitHub' : isReddit ? 'Reddit' : isSpotify ? 'Spotify' : 'Unknown'}</p>
+                {isSpotify && (
+                    <>
+                        <p className="text-lg">username: {user.username}</p>
+                        <p className="text-lg">Email: {user.email}</p>
+                        <p className="text-lg">#{user.discriminator}</p>
+                    </>
+                )}
+                <p>Signed in with: {isGoogle ? 'Google' : isGithub ? 'GitHub' : isReddit ? 'Reddit' : isSpotify ? 'Spotify' : isDiscord ? 'Discord' : 'Unknown'}</p>
             </div>
 
             <div className="mt-6">
