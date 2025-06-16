@@ -13,7 +13,7 @@ export default function Home() {
                     <a
                         href="sign-in/google"
                         className="w-full text-center text-white font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
-                        style={{ backgroundColor: '#FFFDDD', color: '#4285F4'}}
+                        style={{ backgroundColor: '#FFFFFF', color: '#4285F4'}}
                     >
                         Sign in with Google
                     </a>
