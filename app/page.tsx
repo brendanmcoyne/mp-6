@@ -1,10 +1,6 @@
 'use client';
 
 export default function Home() {
-    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_OAUTH_REDIRECT_GOOGLE}&response_type=code&scope=openid%20email%20profile`;
-
-    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_OAUTH_REDIRECT_GITHUB}&scope=user`;
-
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-green-200">
             <div className="w-120 bg-white p-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center">
@@ -15,14 +11,14 @@ export default function Home() {
 
                 <div className="flex flex-col w-full">
                     <a
-                        href={googleAuthUrl}
+                        href="sign-in/google"
                         className="w-full text-center text-white bg-green-500 hover:bg-green-700 font-medium rounded-lg mb-3 px-5 py-2.5 hover:shadow-lg"
                     >
                         Sign in with Google
                     </a>
 
                     <a
-                        href={githubAuthUrl}
+                        href="sign-in/github"
                         className="w-full text-center text-white bg-gray-800 hover:bg-gray-900 font-medium rounded-lg px-5 py-2.5 hover:shadow-lg"
                     >
                         Sign in with GitHub
