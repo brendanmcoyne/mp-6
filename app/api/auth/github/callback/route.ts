@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
     const userRes = await fetch('https://api.github.com/user', {
         headers: {
             Authorization: `Bearer ${tokenData.access_token}`,
-            Accept: 'application/json',
+            'User-Agent': 'mp-6-app',
         },
     });
 

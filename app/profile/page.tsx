@@ -46,14 +46,14 @@ export default function ProfilePage() {
         <div className="flex flex-col items-center justify-center min-h-screen bg-green-200 text-center">
             {isGoogle && (
                 <Image
-                    src="/czech.jpg" // or user.picture if you add that from Google response
+                    src="/czech.jpg"
                     alt="Profile"
                     width={96}
                     height={96}
                     className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
                 />
             )}
-            {isGithub && user.avatar_url && (
+            {isGithub && user.avatar_url ? (
                 <Image
                     src={user.avatar_url}
                     alt="GitHub Avatar"
@@ -61,6 +61,8 @@ export default function ProfilePage() {
                     height={96}
                     className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
                 />
+            ) : (
+                <div className="text-gray-600">GitHub avatar not found</div>
             )}
 
             <div className="w-120 bg-white p-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center">
