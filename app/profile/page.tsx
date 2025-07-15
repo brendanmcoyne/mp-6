@@ -11,7 +11,7 @@ export default function ProfilePage() {
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const userParam = urlParams.get('user');
-        const provider = urlParams.get('provider'); // optional, pass from callback redirect
+        const provider = urlParams.get('provider');
 
         if (userParam) {
             try {
@@ -36,10 +36,11 @@ export default function ProfilePage() {
     const isReddit = user.provider === 'reddit';
     const isSpotify = user.provider === 'spotify';
     const isDiscord = user.provider === 'discord';
+    const isDropbox = user.provider === 'dropbox';
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-green-200 text-center">
-            {isGoogle && (
+            {(isGoogle || isGithub || isReddit || isSpotify || isDiscord || isDropbox) && (
                 <Image
                     src="/czech.jpg"
                     alt="Profile"
@@ -48,52 +49,33 @@ export default function ProfilePage() {
                     className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
                 />
             )}
-            {isGithub && (
-                <Image
-                    src="/czech.jpg"
-                    alt="Profile"
-                    width={96}
-                    height={96}
-                    className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
-                />
-            )}
-            {isReddit && (
-                <Image
-                    src="/czech.jpg"
-                    alt="Profile"
-                    width={96}
-                    height={96}
-                    className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
-                />
-            )}
-            {isSpotify && (
-                <Image
-                    src="/czech.jpg"
-                    alt="Profile"
-                    width={96}
-                    height={96}
-                    className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
-                />
-            )}
-            {isDiscord && (
-                <Image
-                    src="/czech.jpg"
-                    alt="Profile"
-                    width={96}
-                    height={96}
-                    className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
-                />
-            )}
+
             <div className="w-120 bg-white p-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center">
                 <h1 className="text-3xl font-bold mb-4">
-                    Welcome, {isGoogle ? user.name : isGithub ? user.login : isReddit ? user.name : isSpotify ? user.display_name : 'User'}!
+                    Welcome,{' '}
+                    {isGoogle
+                        ? user.name
+                        : isGithub
+                            ? user.login
+                            : isReddit
+                                ? user.name
+                                : isSpotify
+                                    ? user.display_name
+                                    : isDiscord
+                                        ? user.username
+                                        : isDropbox
+                                            ? user.dropbox_name?.display_name
+                                            : 'User'}
+                    !
                 </h1>
+
                 {isGoogle && (
                     <>
                         <p className="text-lg">Email: {user.email}</p>
                         <p className="text-lg">Email Verified: {user.verified_email ? 'Yes' : 'No'}</p>
                     </>
                 )}
+
                 {isGithub && (
                     <>
                         <p className="text-lg">GitHub Username: {user.login}</p>
@@ -111,24 +93,47 @@ export default function ProfilePage() {
                         <p className="text-lg">Public Repos: {user.public_repos}</p>
                     </>
                 )}
-                {isReddit && (
-                    <>
-                        <p className="text-lg">Reddit ID: {user.id}</p>
-                    </>
-                )}
+
+                {isReddit && <p className="text-lg">Reddit ID: {user.id}</p>}
+
                 {isSpotify && (
                     <>
                         <p className="text-lg">Display Name: {user.display_name}</p>
                         <p className="text-lg">Email: {user.email}</p>
                     </>
                 )}
+
                 {isDiscord && (
                     <>
-                        <p className="text-lg">username: {user.username}</p>
+                        <p className="text-lg">Username: {user.username}</p>
                         <p className="text-lg">Email: {user.email}</p>
                     </>
                 )}
-                <p>Signed in with: {isGoogle ? 'Google' : isGithub ? 'GitHub' : isReddit ? 'Reddit' : isSpotify ? 'Spotify' : isDiscord ? 'Discord' : 'Unknown'}</p>
+
+                {isDropbox && (
+                    <>
+                        <p className="text-lg">Dropbox Display Name: {user.dropbox_name?.display_name}</p>
+                        <p className="text-lg">Email: {user.email}</p>
+                        <p className="text-lg">Account ID: {user.account_id}</p>
+                    </>
+                )}
+
+                <p>
+                    Signed in with:{' '}
+                    {isGoogle
+                        ? 'Google'
+                        : isGithub
+                            ? 'GitHub'
+                            : isReddit
+                                ? 'Reddit'
+                                : isSpotify
+                                    ? 'Spotify'
+                                    : isDiscord
+                                        ? 'Discord'
+                                        : isDropbox
+                                            ? 'Dropbox'
+                                            : 'Unknown'}
+                </p>
             </div>
 
             <div className="mt-6">
