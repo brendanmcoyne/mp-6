@@ -8,12 +8,11 @@ export async function GET(req: NextRequest) {
             return NextResponse.redirect(new URL('/', req.url));
         }
 
-        // Prepare POST params for token exchange
         const params = new URLSearchParams();
         params.append('code', code);
         params.append('client_id', process.env.DROPBOX_CLIENT_ID!);
         params.append('client_secret', process.env.DROPBOX_CLIENT_SECRET!);
-        params.append('redirect_uri', process.env.DROPBOX_REDIRECT_URI!);
+        params.append('redirect_uri', 'https://mp-6-brown.vercel.app/api/auth/dropbox/callback');
         params.append('grant_type', 'authorization_code');
 
         console.log("Sending token exchange request to Dropbox with:");
