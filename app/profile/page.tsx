@@ -6,9 +6,27 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User } from '@/lib/types';
 
+
+
 export default function ProfilePage() {
     const [user, setUser] = useState<User | null>(null);
     const [showCheck, setShowCheck] = useState(true);
+
+    const providers = {
+        google: { name: 'Google', src: '/google.jpg', bg: '#FFFFFF', text: '#4285F4' },
+        github: { name: 'GitHub', src: '/Github.png', bg: '#24292E', text: '#FAFBFC' },
+        yahoo: { name: 'Yahoo', src: '/yahoo.png', bg: '#410093', text: '#FFFFFF' },
+        reddit: { name: 'Reddit', src: '/reddit.png', bg: '#DF4500', text: '#FFFDDD' },
+        spotify: { name: 'Spotify', src: '/Spotify.png', bg: '#212121', text: '#1ED760' },
+        discord: { name: 'Discord', src: '/discord.webp', bg: '#7289DA', text: '#23272A' },
+    } as const;
+
+    type ProviderKey = keyof typeof providers;
+
+    function getProviderInfo(provider: string | undefined) {
+        if (!provider || !(provider in providers)) return null;
+        return providers[provider as ProviderKey];
+    }
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -51,9 +69,16 @@ export default function ProfilePage() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.5 }}
-                        className="bg-green-500 text-white text-2xl px-6 py-4 rounded-full shadow-lg flex items-center gap-3"
+                        className="flex items-center gap-4 bg-green-500 text-white text-2xl px-6 py-4 rounded-full shadow-lg"
                     >
-                        ✅ Authentication Complete
+                        <Image
+                            src="/czech.jpg"
+                            alt="Czech Flag"
+                            width={48}
+                            height={48}
+                            className="rounded-full object-cover"
+                        />
+                        ✅ Authentication Complete!
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -66,15 +91,20 @@ export default function ProfilePage() {
                     transition={{ duration: 0.6 }}
                     className="w-120 bg-white p-6 mt-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center"
                 >
-                    {(isGoogle || isGithub || isReddit || isSpotify || isDiscord || isYahoo) && (
-                        <Image
-                            src="/czech.jpg"
-                            alt="Profile"
-                            width={96}
-                            height={96}
-                            className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
-                        />
-                    )}
+                    {(() => {
+                        const providerInfo = getProviderInfo(user.provider);
+                        if (!providerInfo) return null;
+
+                        return (
+                            <Image
+                                src={providerInfo.src}
+                                alt={providerInfo.name + ' logo'}
+                                width={96}
+                                height={96}
+                                className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
+                            />
+                        );
+                    })()}
 
                     <h1 className="text-3xl font-bold mb-4">
                         Welcome,{' '}
@@ -94,7 +124,6 @@ export default function ProfilePage() {
                         !
                     </h1>
 
-                    {/* User-specific content */}
                     {isGoogle && (
                         <>
                             <p className="text-lg">Email: {user.email}</p>
