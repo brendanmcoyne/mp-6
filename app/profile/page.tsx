@@ -61,7 +61,7 @@ export default function ProfilePage() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300 text-center px-4">
-            <div className="min-h-[120px] flex items-center justify-center">
+            <div className="flex flex-col min-h-[120px] items-center justify-center">
                 <AnimatePresence>
                     {showCheck && (
                         <motion.div
@@ -70,7 +70,7 @@ export default function ProfilePage() {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.8 }}
                             transition={{ duration: 0.5 }}
-                            className="flex items-center gap-4 bg-green-500 text-white text-2xl px-6 py-4 rounded-full shadow-lg"
+                            className="flex items-center gap-4 bg-gray-300 text-black text-2xl px-6 py-4"
                         >
                             <Image
                                 src="/czech.jpg"
@@ -79,7 +79,7 @@ export default function ProfilePage() {
                                 height={48}
                                 className="rounded-full object-cover"
                             />
-                            ✅ Authentication Complete!
+                            <p>Authentication Complete!</p>
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -91,19 +91,19 @@ export default function ProfilePage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="w-120 bg-white p-6 mt-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center"
+                    className="mt-10 px-6 py-8 bg-white/80 backdrop-blur-md rounded-2xl drop-shadow-md flex flex-col items-center w-full max-w-xl"
                 >
                     {providerInfo && (
                         <Image
                             src={providerInfo.src}
                             alt={`${providerInfo.name} logo`}
-                            width={96}
-                            height={96}
-                            className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
+                            width={72}
+                            height={72}
+                            className="rounded-full mb-4 object-cover"
                         />
                     )}
 
-                    <h1 className="text-3xl font-bold mb-4">
+                    <h1 className="text-3xl font-semibold text-gray-800 mb-4 text-center">
                         Welcome,{' '}
                         {user.provider === 'google'
                             ? user.name
@@ -121,59 +121,80 @@ export default function ProfilePage() {
                         !
                     </h1>
 
-                    {user.provider === 'google' && (
-                        <>
-                            <p className="text-lg">Email: {user.email}</p>
-                            <p className="text-lg">Email Verified: {user.verified_email ? 'Yes' : 'No'}</p>
-                        </>
-                    )}
+                    <div className="flex flex-col gap-3 text-lg text-gray-700 w-full">
+                        {user.provider === 'google' && (
+                            <>
+                                <p><strong>Email:</strong> {user.email}</p>
+                                <p><strong>Email Verified:</strong> {user.verified_email ? 'Yes' : 'No'}</p>
+                                <p><strong>Locale:</strong> {user.locale}</p>
+                                <p><strong>Picture:</strong> <a href={user.picture} className="text-blue-500 underline" target="_blank">View</a></p>
+                            </>
+                        )}
 
-                    {user.provider === 'github' && (
-                        <>
-                            <p className="text-lg">GitHub Username: {user.login}</p>
-                            {user.name && <p className="text-lg">Name: {user.name}</p>}
-                            {user.bio && <p className="text-lg">Bio: {user.bio}</p>}
-                            {user.location && <p className="text-lg">Location: {user.location}</p>}
-                            {user.html_url && (
-                                <p className="text-lg">
-                                    GitHub Profile:{' '}
-                                    <a href={user.html_url} className="text-blue-600 underline" target="_blank">
-                                        {user.html_url}
-                                    </a>
-                                </p>
-                            )}
-                            <p className="text-lg">Public Repos: {user.public_repos}</p>
-                        </>
-                    )}
+                        {user.provider === 'github' && (
+                            <>
+                                <p><strong>Username:</strong> {user.login}</p>
+                                {user.name && <p><strong>Name:</strong> {user.name}</p>}
+                                {user.bio && <p><strong>Bio:</strong> {user.bio}</p>}
+                                {user.location && <p><strong>Location:</strong> {user.location}</p>}
+                                {user.blog && <p><strong>Website:</strong> <a href={user.blog} className="text-blue-500 underline" target="_blank">{user.blog}</a></p>}
+                                <p><strong>GitHub Profile:</strong> <a href={user.html_url} className="text-blue-500 underline" target="_blank">{user.html_url}</a></p>
+                                <p><strong>Public Repos:</strong> {user.public_repos}</p>
+                                <p><strong>Followers:</strong> {user.followers}</p>
+                                <p><strong>Following:</strong> {user.following}</p>
+                            </>
+                        )}
 
-                    {user.provider === 'reddit' && <p className="text-lg">Reddit ID: {user.id}</p>}
+                        {user.provider === 'reddit' && (
+                            <>
+                                <p><strong>Username:</strong> {user.name}</p>
+                                <p><strong>Reddit ID:</strong> {user.id}</p>
+                                <p><strong>Link Karma:</strong> {user.link_karma}</p>
+                                <p><strong>Comment Karma:</strong> {user.comment_karma}</p>
+                                <p><strong>Verified:</strong> {user.verified ? 'Yes' : 'No'}</p>
+                                <p><strong>Premium:</strong> {user.is_gold ? 'Yes' : 'No'}</p>
+                            </>
+                        )}
 
-                    {user.provider === 'spotify' && (
-                        <>
-                            <p className="text-lg">Display Name: {user.display_name}</p>
-                            <p className="text-lg">Email: {user.email}</p>
-                        </>
-                    )}
+                        {user.provider === 'spotify' && (
+                            <>
+                                <p><strong>Display Name:</strong> {user.display_name}</p>
+                                <p><strong>Email:</strong> {user.email}</p>
+                                <p><strong>Country:</strong> {user.country}</p>
+                                <p><strong>Product:</strong> {user.product}</p>
+                                {user.external_urls?.spotify && (
+                                    <p>
+                                        <strong>Spotify Profile:</strong>{' '}
+                                        <a href={user.external_urls.spotify} className="text-blue-500 underline" target="_blank">
+                                            {user.external_urls.spotify}
+                                        </a>
+                                    </p>
+                                )}
+                            </>
+                        )}
 
-                    {user.provider === 'discord' && (
-                        <>
-                            <p className="text-lg">Username: {user.username}</p>
-                            <p className="text-lg">Email: {user.email}</p>
-                        </>
-                    )}
+                        {user.provider === 'discord' && (
+                            <>
+                                <p><strong>Username:</strong> {user.username}</p>
+                                <p><strong>Discriminator:</strong> #{user.discriminator}</p>
+                                <p><strong>Email:</strong> {user.email}</p>
+                                <p><strong>ID:</strong> {user.id}</p>
+                                <p><strong>Verified:</strong> {user.verified ? 'Yes' : 'No'}</p>
+                                <p><strong>Locale:</strong> {user.locale}</p>
+                            </>
+                        )}
 
-                    {user.provider === 'yahoo' && (
-                        <>
-                            <p className="text-lg">Yahoo Name: {user.name}</p>
-                            <p className="text-lg">Email: {user.email}</p>
-                            <p className="text-lg">Email Verified: {user.email_verified ? 'Yes' : 'No'}</p>
-                            <p className="text-lg">Yahoo ID: {user.sub}</p>
-                        </>
-                    )}
+                        {user.provider === 'yahoo' && (
+                            <>
+                                <p><strong>Name:</strong> {user.name}</p>
+                                <p><strong>Email:</strong> {user.email}</p>
+                                <p><strong>Email Verified:</strong> {user.email_verified ? 'Yes' : 'No'}</p>
+                                <p><strong>Yahoo ID:</strong> {user.sub}</p>
+                            </>
+                        )}
 
-                    <p className="mt-2">
-                        Signed in with: {providerInfo?.name ?? 'Unknown'}
-                    </p>
+                        <p className="mt-2"><strong>Signed in with:</strong> {providerInfo?.name ?? 'Unknown'}</p>
+                    </div>
                 </motion.div>
             )}
 
