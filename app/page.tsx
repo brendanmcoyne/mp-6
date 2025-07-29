@@ -6,10 +6,10 @@ export default function Home() {
     const providers = [
         { name: 'Google', src: 'google.jpg', href: 'sign-in/google', bg: '#FFFFFF', text: '#4285F4' },
         { name: 'GitHub', src: 'Github.png', href: 'sign-in/github', bg: '#24292E', text: '#FAFBFC' },
-        { name: 'Reddit', src: 'reddit.jpg', href: 'sign-in/reddit', bg: '#FF4500', text: '#FFFDDD' },
+        { name: 'Yahoo', src: 'yahoo.png', href: 'sign-in/yahoo', bg: '#410093', text: '#FFFFFF' },
+        { name: 'Reddit', src: 'reddit.png', href: 'sign-in/reddit', bg: '#DF4500', text: '#FFFDDD' },
         { name: 'Spotify', src: 'Spotify.png', href: 'sign-in/spotify', bg: '#212121', text: '#1ED760' },
-        { name: 'Discord', src: 'Discord.png', href: 'sign-in/discord', bg: '#7289DA', text: '#23272A' },
-        { name: 'Yahoo', src: 'Dropbox.png', href: 'sign-in/yahoo', bg: '#007EE5', text: '#FFFFFF' },
+        { name: 'Discord', src: 'discord.webp', href: 'sign-in/discord', bg: '#7289DA', text: '#23272A' },
     ];
 
     return (
