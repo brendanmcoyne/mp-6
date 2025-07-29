@@ -69,7 +69,7 @@ export default function ProfilePage() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.5 }}
-                        className="flex items-center gap-4 bg-green-500 text-white text-2xl px-6 py-4 rounded-full shadow-lg"
+                        className="flex flex-col items-center gap-4 bg-gray-300 text-white text-2xl px-6 py-4"
                     >
                         <Image
                             src="/czech.jpg"
@@ -78,7 +78,7 @@ export default function ProfilePage() {
                             height={48}
                             className="rounded-full object-cover"
                         />
-                        ✅ Authentication Complete!
+                        Authentication Complete!
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -88,7 +88,7 @@ export default function ProfilePage() {
                     key="profile"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 0.8, ease: 'easeOut' }}
                     className="w-120 bg-white p-6 mt-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center"
                 >
                     {(() => {
@@ -108,20 +108,8 @@ export default function ProfilePage() {
 
                     <h1 className="text-3xl font-bold mb-4">
                         Welcome,{' '}
-                        {isGoogle
-                            ? user.name
-                            : isGithub
-                                ? user.login
-                                : isReddit
-                                    ? user.name
-                                    : isSpotify
-                                        ? user.display_name
-                                        : isDiscord
-                                            ? user.username
-                                            : isYahoo
-                                                ? user.name
-                                                : 'User'}
-                        !
+                        {isGoogle ? user.name : isGithub ? user.login : isReddit ? user.name : isSpotify
+                            ? user.display_name : isDiscord ? user.username : isYahoo ? user.name : 'User'}!
                     </h1>
 
                     {isGoogle && (
