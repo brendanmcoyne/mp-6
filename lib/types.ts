@@ -1,6 +1,6 @@
 export type User = {
     // Shared
-    provider?: 'google' | 'github' | 'reddit' | 'spotify' | 'discord' | 'dropbox';
+    provider?: 'google' | 'github' | 'reddit' | 'spotify' | 'discord' | 'yahoo';
 
     // Google-specific
     name?: string;
@@ -31,10 +31,6 @@ export type User = {
     discriminator?: string;
 
     // Dropbox-specific
-    account_id?: string;
-    dropbox_name?: {
-        display_name?: string;
-        given_name?: string;
-        surname?: string;
-    };
+    sub?: string;
+    email_verified?: boolean;
 };

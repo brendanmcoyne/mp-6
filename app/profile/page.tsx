@@ -36,11 +36,11 @@ export default function ProfilePage() {
     const isReddit = user.provider === 'reddit';
     const isSpotify = user.provider === 'spotify';
     const isDiscord = user.provider === 'discord';
-    const isDropbox = user.provider === 'dropbox';
+    const isYahoo = user.provider === 'yahoo';
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-green-200 text-center">
-            {(isGoogle || isGithub || isReddit || isSpotify || isDiscord || isDropbox) && (
+            {(isGoogle || isGithub || isReddit || isSpotify || isDiscord || isYahoo) && (
                 <Image
                     src="/czech.jpg"
                     alt="Profile"
@@ -63,8 +63,8 @@ export default function ProfilePage() {
                                     ? user.display_name
                                     : isDiscord
                                         ? user.username
-                                        : isDropbox
-                                            ? user.dropbox_name?.display_name
+                                        : isYahoo
+                                            ? user.name
                                             : 'User'}
                     !
                 </h1>
@@ -110,11 +110,12 @@ export default function ProfilePage() {
                     </>
                 )}
 
-                {isDropbox && (
+                {isYahoo && (
                     <>
-                        <p className="text-lg">Dropbox Display Name: {user.dropbox_name?.display_name}</p>
+                        <p className="text-lg">Yahoo Name: {user.name}</p>
                         <p className="text-lg">Email: {user.email}</p>
-                        <p className="text-lg">Account ID: {user.account_id}</p>
+                        <p className="text-lg">Email Verified: {user.email_verified ? 'Yes' : 'No'}</p>
+                        <p className="text-lg">Yahoo ID: {user.sub}</p>
                     </>
                 )}
 
@@ -130,8 +131,8 @@ export default function ProfilePage() {
                                     ? 'Spotify'
                                     : isDiscord
                                         ? 'Discord'
-                                        : isDropbox
-                                            ? 'Dropbox'
+                                        : isYahoo
+                                            ? 'Yahoo'
                                             : 'Unknown'}
                 </p>
             </div>
