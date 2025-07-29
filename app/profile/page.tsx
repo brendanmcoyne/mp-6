@@ -11,6 +11,12 @@ import { User } from '@/lib/types';
 export default function ProfilePage() {
     const [user, setUser] = useState<User | null>(null);
     const [showCheck, setShowCheck] = useState(true);
+    const [showUserInfo, setShowUserInfo] = useState(false);
+
+    setTimeout(() => {
+        setShowCheck(false);
+        setTimeout(() => setShowUserInfo(true), 500); // Wait for exit animation to finish
+    }, 1800);
 
     const providers = {
         google: { name: 'Google', src: '/google.jpg', bg: '#FFFFFF', text: '#4285F4' },
@@ -41,10 +47,9 @@ export default function ProfilePage() {
                     userObj.provider = provider;
                 }
 
-                // Simulate slight delay for animation
                 setTimeout(() => {
                     setUser(userObj);
-                    setTimeout(() => setShowCheck(false), 1800); // Hide checkmark after delay
+                    setTimeout(() => setShowCheck(false), 1800);
                 }, 500);
             } catch (err) {
                 console.error('Failed to parse userParam:', err);
@@ -52,74 +57,78 @@ export default function ProfilePage() {
         }
     }, []);
 
-    const isGoogle = user?.provider === 'google';
-    const isGithub = user?.provider === 'github';
-    const isReddit = user?.provider === 'reddit';
-    const isSpotify = user?.provider === 'spotify';
-    const isDiscord = user?.provider === 'discord';
-    const isYahoo = user?.provider === 'yahoo';
+    const providerInfo = getProviderInfo(user?.provider);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300 text-center">
-            <AnimatePresence>
-                {showCheck && (
-                    <motion.div
-                        key="check"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.5 }}
-                        className="flex flex-col items-center gap-4 bg-gray-300 text-white text-2xl px-6 py-4"
-                    >
-                        <Image
-                            src="/czech.jpg"
-                            alt="Czech Flag"
-                            width={48}
-                            height={48}
-                            className="rounded-full object-cover"
-                        />
-                        Authentication Complete!
-                    </motion.div>
-                )}
-            </AnimatePresence>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-300 text-center px-4">
+            <div className="min-h-[120px] flex items-center justify-center">
+                <AnimatePresence>
+                    {showCheck && (
+                        <motion.div
+                            key="check"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.5 }}
+                            className="flex items-center gap-4 bg-green-500 text-white text-2xl px-6 py-4 rounded-full shadow-lg"
+                        >
+                            <Image
+                                src="/czech.jpg"
+                                alt="Czech Flag"
+                                width={48}
+                                height={48}
+                                className="rounded-full object-cover"
+                            />
+                            ✅ Authentication Complete!
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
 
-            {!showCheck && user && (
+            {showUserInfo && user && (
                 <motion.div
                     key="profile"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeOut' }}
+                    transition={{ duration: 0.6 }}
                     className="w-120 bg-white p-6 mt-6 rounded-xl border-2 shadow-lg flex flex-col items-center justify-center"
                 >
-                    {(() => {
-                        const providerInfo = getProviderInfo(user.provider);
-                        if (!providerInfo) return null;
-
-                        return (
-                            <Image
-                                src={providerInfo.src}
-                                alt={providerInfo.name + ' logo'}
-                                width={96}
-                                height={96}
-                                className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
-                            />
-                        );
-                    })()}
+                    {providerInfo && (
+                        <Image
+                            src={providerInfo.src}
+                            alt={`${providerInfo.name} logo`}
+                            width={96}
+                            height={96}
+                            className="rounded-full mt-3 mb-4 w-24 h-24 object-cover"
+                        />
+                    )}
 
                     <h1 className="text-3xl font-bold mb-4">
                         Welcome,{' '}
-                        {isGoogle ? user.name : isGithub ? user.login : isReddit ? user.name : isSpotify
-                            ? user.display_name : isDiscord ? user.username : isYahoo ? user.name : 'User'}!
+                        {user.provider === 'google'
+                            ? user.name
+                            : user.provider === 'github'
+                                ? user.login
+                                : user.provider === 'reddit'
+                                    ? user.name
+                                    : user.provider === 'spotify'
+                                        ? user.display_name
+                                        : user.provider === 'discord'
+                                            ? user.username
+                                            : user.provider === 'yahoo'
+                                                ? user.name
+                                                : 'User'}
+                        !
                     </h1>
 
-                    {isGoogle && (
+                    {user.provider === 'google' && (
                         <>
                             <p className="text-lg">Email: {user.email}</p>
                             <p className="text-lg">Email Verified: {user.verified_email ? 'Yes' : 'No'}</p>
                         </>
                     )}
 
-                    {isGithub && (
+                    {user.provider === 'github' && (
                         <>
                             <p className="text-lg">GitHub Username: {user.login}</p>
                             {user.name && <p className="text-lg">Name: {user.name}</p>}
@@ -137,20 +146,23 @@ export default function ProfilePage() {
                         </>
                     )}
 
-                    {isReddit && <p className="text-lg">Reddit ID: {user.id}</p>}
-                    {isSpotify && (
+                    {user.provider === 'reddit' && <p className="text-lg">Reddit ID: {user.id}</p>}
+
+                    {user.provider === 'spotify' && (
                         <>
                             <p className="text-lg">Display Name: {user.display_name}</p>
                             <p className="text-lg">Email: {user.email}</p>
                         </>
                     )}
-                    {isDiscord && (
+
+                    {user.provider === 'discord' && (
                         <>
                             <p className="text-lg">Username: {user.username}</p>
                             <p className="text-lg">Email: {user.email}</p>
                         </>
                     )}
-                    {isYahoo && (
+
+                    {user.provider === 'yahoo' && (
                         <>
                             <p className="text-lg">Yahoo Name: {user.name}</p>
                             <p className="text-lg">Email: {user.email}</p>
@@ -160,25 +172,12 @@ export default function ProfilePage() {
                     )}
 
                     <p className="mt-2">
-                        Signed in with:{' '}
-                        {isGoogle
-                            ? 'Google'
-                            : isGithub
-                                ? 'GitHub'
-                                : isReddit
-                                    ? 'Reddit'
-                                    : isSpotify
-                                        ? 'Spotify'
-                                        : isDiscord
-                                            ? 'Discord'
-                                            : isYahoo
-                                                ? 'Yahoo'
-                                                : 'Unknown'}
+                        Signed in with: {providerInfo?.name ?? 'Unknown'}
                     </p>
                 </motion.div>
             )}
 
-            {!showCheck && (
+            {showUserInfo && (
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
