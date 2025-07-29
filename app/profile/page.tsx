@@ -70,13 +70,13 @@ export default function ProfilePage() {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.8 }}
                             transition={{ duration: 0.5 }}
-                            className="flex items-center gap-4 bg-gray-300 text-black text-2xl px-6 py-4"
+                            className="flex flex-col items-center gap-4 bg-gray-300 text-gray-700 text-4xl px-6 py-4"
                         >
                             <Image
                                 src="/czech.jpg"
                                 alt="Czech Flag"
-                                width={48}
-                                height={48}
+                                width={200}
+                                height={200}
                                 className="rounded-full object-cover"
                             />
                             <p>Authentication Complete!</p>
@@ -126,7 +126,6 @@ export default function ProfilePage() {
                             <>
                                 <p><strong>Email:</strong> {user.email}</p>
                                 <p><strong>Email Verified:</strong> {user.verified_email ? 'Yes' : 'No'}</p>
-                                <p><strong>Locale:</strong> {user.locale}</p>
                                 <p><strong>Picture:</strong> <a href={user.picture} className="text-blue-500 underline" target="_blank">View</a></p>
                             </>
                         )}
@@ -136,8 +135,6 @@ export default function ProfilePage() {
                                 <p><strong>Username:</strong> {user.login}</p>
                                 {user.name && <p><strong>Name:</strong> {user.name}</p>}
                                 {user.bio && <p><strong>Bio:</strong> {user.bio}</p>}
-                                {user.location && <p><strong>Location:</strong> {user.location}</p>}
-                                {user.blog && <p><strong>Website:</strong> <a href={user.blog} className="text-blue-500 underline" target="_blank">{user.blog}</a></p>}
                                 <p><strong>GitHub Profile:</strong> <a href={user.html_url} className="text-blue-500 underline" target="_blank">{user.html_url}</a></p>
                                 <p><strong>Public Repos:</strong> {user.public_repos}</p>
                                 <p><strong>Followers:</strong> {user.followers}</p>
@@ -176,7 +173,6 @@ export default function ProfilePage() {
                         {user.provider === 'discord' && (
                             <>
                                 <p><strong>Username:</strong> {user.username}</p>
-                                <p><strong>Discriminator:</strong> #{user.discriminator}</p>
                                 <p><strong>Email:</strong> {user.email}</p>
                                 <p><strong>ID:</strong> {user.id}</p>
                                 <p><strong>Verified:</strong> {user.verified ? 'Yes' : 'No'}</p>
@@ -193,8 +189,8 @@ export default function ProfilePage() {
                             </>
                         )}
 
-                        <p className="mt-2"><strong>Signed in with:</strong> {providerInfo?.name ?? 'Unknown'}</p>
                     </div>
+                    <p className="mt-2"><strong>Signed in with:</strong> {providerInfo?.name ?? 'Unknown'}</p>
                 </motion.div>
             )}
 
