@@ -44,7 +44,7 @@ export default function Home() {
                             }}
                         >
                             <Image src={`/${provider.src}`} alt={provider.name} width={40} height={40} />
-                            <span className="mt-2 text-xl group-hover:underline">{provider.name}</span>
+                            <span className="mt-2 text-xl">{provider.name}</span>
                         </motion.a>
                     ))}
                 </div>
